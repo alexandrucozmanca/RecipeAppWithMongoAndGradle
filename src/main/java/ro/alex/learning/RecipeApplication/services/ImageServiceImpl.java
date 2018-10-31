@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ro.alex.learning.RecipeApplication.domain.Recipe;
 import ro.alex.learning.RecipeApplication.repositories.RecipeRepository;
-
-import javax.transaction.Transactional;
 import java.io.IOException;
 
 @Slf4j
@@ -20,8 +18,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    @Transactional
-    public void saveImageFile(Long recipeId, MultipartFile file) {
+    public void saveImageFile(String recipeId, MultipartFile file) {
 
         try {
             log.debug("Received a file for recipe id: " + recipeId);

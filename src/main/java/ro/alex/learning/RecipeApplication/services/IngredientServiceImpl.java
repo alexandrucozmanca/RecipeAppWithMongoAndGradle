@@ -9,8 +9,6 @@ import ro.alex.learning.RecipeApplication.domain.Ingredient;
 import ro.alex.learning.RecipeApplication.domain.Recipe;
 import ro.alex.learning.RecipeApplication.repositories.RecipeRepository;
 import ro.alex.learning.RecipeApplication.repositories.UnitOfMeasureRepository;
-
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Slf4j
@@ -32,7 +30,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public IngredientCommand findByRecipeIdAndIngredientId(Long recipeId, Long ingredientId) {
+    public IngredientCommand findByRecipeIdAndIngredientId(String recipeId, String ingredientId) {
 
         Optional<Recipe> recipeOptional = recipeRepository.findById(recipeId);
 
@@ -54,10 +52,9 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    @Transactional
     public IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand) {
 
-        Long id = ingredientCommand.getId();
+        String id = ingredientCommand.getId();
 
         Optional<Recipe> recipeOptional = recipeRepository.findById(ingredientCommand.getRecipeId());
         if (!recipeOptional.isPresent()){
@@ -104,7 +101,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public void deleteByRecipeIdAndIngredientId(Long recipeId, Long ingredientId) {
+    public void deleteByRecipeIdAndIngredientId(String recipeId, String ingredientId) {
 
         log.debug("Deleting ingredient: " + recipeId + ":" + ingredientId);
 

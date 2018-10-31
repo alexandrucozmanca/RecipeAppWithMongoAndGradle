@@ -10,8 +10,8 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 public class IngredientCommand implements Comparable<IngredientCommand>{
-    private Long id;
-    private Long recipeId;
+    private String id;
+    private String recipeId;
     private String description;
     private BigDecimal amount;
     private UnitOfMeasureCommand uom;
@@ -24,6 +24,6 @@ public class IngredientCommand implements Comparable<IngredientCommand>{
         if(this == null || this.getId() == null)
             return -1;
 
-        return Long.compare(this.getId(), other.getId());
+        return this.getId().compareTo(other.getId());
     }
 }

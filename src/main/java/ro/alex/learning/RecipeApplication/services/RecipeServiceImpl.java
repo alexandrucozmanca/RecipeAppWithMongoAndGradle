@@ -8,8 +8,6 @@ import ro.alex.learning.RecipeApplication.converters.RecipeToRecipeCommand;
 import ro.alex.learning.RecipeApplication.domain.Recipe;
 import ro.alex.learning.RecipeApplication.exceptions.NotFoundException;
 import ro.alex.learning.RecipeApplication.repositories.RecipeRepository;
-
-import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
@@ -38,7 +36,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Recipe findById(Long l){
+    public Recipe findById(String l){
 
         Optional<Recipe> recipeOptional = recipeRepository.findById(l);
 
@@ -50,13 +48,11 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    @Transactional
-    public RecipeCommand findCommandById(Long l){
+    public RecipeCommand findCommandById(String l){
         return recipeToRecipeCommand.convert(findById(l));
     }
 
     @Override
-    @Transactional
     public RecipeCommand saveRecipeCommand(RecipeCommand command) {
         Recipe detachedRecipe = recipeCommandToRecipe.convert(command);
 
@@ -66,7 +62,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public void deleteById(Long idToDelete)    {
+    public void deleteById(String idToDelete)    {
         recipeRepository.deleteById(idToDelete);
     }
 

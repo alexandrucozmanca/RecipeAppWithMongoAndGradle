@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class CategoryCommandToCategoryTest {
 
     public static final String DESCRIPTION = "description";
-    public static final Long LONG_VALUE = new Long(1L);
+    public static final String STRING_VALUE = new String("1");
 
     CategoryCommandToCategory converter;
 
@@ -33,7 +33,7 @@ public class CategoryCommandToCategoryTest {
     public void testConvert() {
         //given
         CategoryCommand command = new CategoryCommand();
-        command.setId(LONG_VALUE);
+        command.setId(STRING_VALUE);
         command.setDescription(DESCRIPTION);
 
         //when
@@ -41,7 +41,7 @@ public class CategoryCommandToCategoryTest {
 
         // then
         assertNotNull(category);
-        assertEquals(LONG_VALUE, category.getId());
+        assertEquals(STRING_VALUE, category.getId());
         assertEquals(DESCRIPTION, category.getDescription());
     }
 }

@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class NotesCommandToNotesTest {
 
     public static final String NOTES = "notes";
-    public static final Long LONG_VALUE = new Long(1L);
+    public static final String ID_VALUE = new String("1");
 
     NotesCommandToNotes converter;
 
@@ -33,7 +33,7 @@ public class NotesCommandToNotesTest {
     public void testConvert() {
         //given
         NotesCommand command = new NotesCommand();
-        command.setId(LONG_VALUE);
+        command.setId(ID_VALUE);
         command.setNotes(NOTES);
 
 
@@ -42,7 +42,7 @@ public class NotesCommandToNotesTest {
 
         // then
         assertNotNull(notes);
-        assertEquals(LONG_VALUE, notes.getId());
+        assertEquals(ID_VALUE, notes.getId());
         assertEquals(NOTES, notes.getNotes());
     }
 }

@@ -10,7 +10,6 @@ import ro.alex.learning.RecipeApplication.repositories.CategoryRepository;
 import ro.alex.learning.RecipeApplication.repositories.RecipeRepository;
 import ro.alex.learning.RecipeApplication.repositories.UnitOfMeasureRepository;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,6 @@ public class DevBootstrap implements ApplicationListener<ContextRefreshedEvent> 
     }
 
     @Override
-    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) { recipeRepository.saveAll(getRecipes());
     log.debug("Loading Bootstrap Data");}
 

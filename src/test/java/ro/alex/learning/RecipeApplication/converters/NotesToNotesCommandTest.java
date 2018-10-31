@@ -11,7 +11,7 @@ public class NotesToNotesCommandTest {
 
 
     public static final String NOTES = "notes";
-    public static final Long LONG_VALUE = new Long(1L);
+    public static final String ID_VALUE = new String("1");
 
     NotesToNotesCommand converter;
 
@@ -34,7 +34,7 @@ public class NotesToNotesCommandTest {
     public void testConvert() {
         //given
         Notes notes = new Notes();
-        notes.setId(LONG_VALUE);
+        notes.setId(ID_VALUE);
         notes.setNotes(NOTES);
 
 
@@ -43,7 +43,7 @@ public class NotesToNotesCommandTest {
 
         // then
         assertNotNull(command);
-        assertEquals(LONG_VALUE, command.getId());
+        assertEquals(ID_VALUE, command.getId());
         assertEquals(NOTES, command.getNotes());
     }
 }

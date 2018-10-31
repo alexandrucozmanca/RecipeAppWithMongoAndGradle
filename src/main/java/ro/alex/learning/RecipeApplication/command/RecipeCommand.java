@@ -18,7 +18,7 @@ import java.util.TreeSet;
 @Setter
 @NoArgsConstructor
 public class RecipeCommand implements Comparable<RecipeCommand>{
-    private Long id;
+    private String id;
 
     @NotBlank
     @Size(min = 3, max = 255)
@@ -58,6 +58,6 @@ public class RecipeCommand implements Comparable<RecipeCommand>{
         if (this == null || this.getId() == null)
             return -1;
 
-        return Long.compare(this.getId(), other.getId());
+        return this.getId().compareTo(other.getId());
     }
 }

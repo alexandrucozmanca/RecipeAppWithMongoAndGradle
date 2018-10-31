@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 
 public class RecipeCommandToRecipeTest {
 
-    private final Long RECIPE_ID = new Long(1);
+    private final String RECIPE_ID = new String("1");
     private final String DESCRIPTION = "description";
     private final Integer PREP_TIME = new Integer (10);
     private final Integer COOK_TIME = new Integer(20);
@@ -25,13 +25,13 @@ public class RecipeCommandToRecipeTest {
     private final String DIRECTIONS = "directions";
     private final String SOURCE = "source";
     private final Difficulty DIFFICULTY = Difficulty.EASY;
-    private final Long NOTES_ID = new Long(2);
+    private final String NOTES_ID = new String("2");
     private final NotesCommand NOTES_COMMAND = new NotesCommand();
-    private final Long CAT_ID_1 = new Long(3);
-    private final Long CAT_ID_2 = new Long(4);
+    private final String CAT_ID_1 = new String("3");
+    private final String CAT_ID_2 = new String("4");
     private final Set<CategoryCommand> CATEGORIES = new HashSet<>();
-    private final Long ING_ID_1 = new Long(5);
-    private final Long ING_ID_2 = new Long(6);
+    private final String ING_ID_1 = new String("5");
+    private final String ING_ID_2 = new String("6");
     private final Set<IngredientCommand> INGREDIENTS = new HashSet<>();
 
 

@@ -15,9 +15,9 @@ import static org.junit.Assert.*;
 public class IngredientCommandToIngredientTest {
 
     public static final String DESCRIPTION = "description";
-    public static final Long ID_VALUE = new Long(1L);
+    public static final String ID_VALUE = new String("1");
     public static final BigDecimal AMOUNT = new BigDecimal(2);
-    public static final Long UOM_ID_VALUE = new Long(2L);
+    public static final String UOM_ID_VALUE = new String("2");
     public static final UnitOfMeasureCommand UNIT_OF_MEASURE_COMMAND = new UnitOfMeasureCommand();
 
     IngredientCommandToIngredient converter;

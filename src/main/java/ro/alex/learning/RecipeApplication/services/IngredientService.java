@@ -4,9 +4,9 @@ import ro.alex.learning.RecipeApplication.command.IngredientCommand;
 
 public interface IngredientService {
 
-    IngredientCommand findByRecipeIdAndIngredientId(Long recipeId, Long ingredientId);
+    IngredientCommand findByRecipeIdAndIngredientId(String recipeId, String ingredientId);
 
     IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand);
 
-    void deleteByRecipeIdAndIngredientId(Long recipeId, Long ingredientID);
+    void deleteByRecipeIdAndIngredientId(String recipeId, String ingredientID);
 }

@@ -11,8 +11,6 @@ import ro.alex.learning.RecipeApplication.converters.RecipeToRecipeCommand;
 import ro.alex.learning.RecipeApplication.domain.Recipe;
 import ro.alex.learning.RecipeApplication.repositories.RecipeRepository;
 
-import javax.transaction.Transactional;
-
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
@@ -32,7 +30,6 @@ public class RecipeServiceIT {
     @Autowired
     RecipeToRecipeCommand recipeToRecipeCommand;
 
-    @Transactional
     @Test
     public void testSaveOfDescription()throws Exception{
         // given
