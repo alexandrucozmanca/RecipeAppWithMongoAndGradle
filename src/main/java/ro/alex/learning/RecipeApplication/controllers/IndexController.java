@@ -1,5 +1,6 @@
 package ro.alex.learning.RecipeApplication.controllers;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +9,7 @@ import ro.alex.learning.RecipeApplication.services.RecipeService;
 
 @Slf4j
 @Controller
+
 public class IndexController {
 
     private final RecipeService recipeService;
