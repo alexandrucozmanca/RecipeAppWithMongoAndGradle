@@ -3,6 +3,7 @@ package ro.alex.learning.RecipeApplication.domain;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+
 import java.math.BigDecimal;
 
 @Getter

@@ -1,5 +1,6 @@
 package ro.alex.learning.RecipeApplication.services;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import ro.alex.learning.RecipeApplication.repositories.RecipeRepository;
 
 import static org.junit.Assert.assertEquals;
 
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RecipeServiceIT {
@@ -29,6 +31,7 @@ public class RecipeServiceIT {
 
     @Autowired
     RecipeToRecipeCommand recipeToRecipeCommand;
+
 
     @Test
     public void testSaveOfDescription()throws Exception{
