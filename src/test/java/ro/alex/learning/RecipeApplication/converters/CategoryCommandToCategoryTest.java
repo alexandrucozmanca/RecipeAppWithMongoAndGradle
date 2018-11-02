@@ -2,7 +2,6 @@ package ro.alex.learning.RecipeApplication.converters;
 
 import org.junit.Before;
 import org.junit.Test;
-import ro.alex.learning.RecipeApplication.controllers.
 import ro.alex.learning.RecipeApplication.command.CategoryCommand;
 import ro.alex.learning.RecipeApplication.domain.Category;
 

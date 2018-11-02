@@ -14,7 +14,7 @@ import ro.alex.learning.RecipeApplication.repositories.RecipeRepository;
 
 import static org.junit.Assert.assertEquals;
 
-@Ignore
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RecipeServiceIT {
