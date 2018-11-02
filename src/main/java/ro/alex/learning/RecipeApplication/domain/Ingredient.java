@@ -1,21 +1,22 @@
 package ro.alex.learning.RecipeApplication.domain;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Getter
 @Setter
-@EqualsAndHashCode(exclude = {"recipe"})
-public class Ingredient implements Comparable<Ingredient>{
+public class Ingredient {
 
-    private String id;
+    private String id = UUID.randomUUID().toString();
     private String description;
     private BigDecimal amount;
+
+    @DBRef
     private UnitOfMeasure uom;
-    private Recipe recipe;
 
     public Ingredient() {
     }
@@ -30,18 +31,6 @@ public class Ingredient implements Comparable<Ingredient>{
         this.description = description;
         this.amount = amount;
         this.uom = uom;
-        this.recipe = recipe;
+       // this.recipe = recipe;
     }
-
-
-    @Override
-    public int compareTo(Ingredient other){
-        if(other == null || other.getId() == null)
-            return 1;
-
-        if (this == null || this.getId() == null)
-            return -1;
-
-        return this.getId().compareTo(other.getId());
     }
-}

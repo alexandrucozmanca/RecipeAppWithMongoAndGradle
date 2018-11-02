@@ -64,6 +64,7 @@ public class IngredientController {
         ingredientCommand.setUom(new UnitOfMeasureCommand());
 
         model.addAttribute("uomList", unitOfMeasureService.listAllUoms());
+
         return "recipe/ingredient/ingredientform";
     }
 
@@ -82,8 +83,8 @@ public class IngredientController {
     public String saveOrUpdate(@ModelAttribute IngredientCommand ingredientCommand){
         IngredientCommand savedIngredient = ingredientService.saveIngredientCommand(ingredientCommand);
 
-        log.debug("Saved recipe id: " + savedIngredient.getRecipeId());
         log.debug("Saved ingredient id: " + savedIngredient.getId());
+
         return "redirect:/recipe/" + savedIngredient.getRecipeId() +"/ingredient/" + savedIngredient.getId() + "/show/";
     }
 
