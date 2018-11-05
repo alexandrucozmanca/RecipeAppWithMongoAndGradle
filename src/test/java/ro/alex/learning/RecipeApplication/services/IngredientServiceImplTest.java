@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import reactor.core.publisher.Mono;
 import ro.alex.learning.RecipeApplication.command.IngredientCommand;
 import ro.alex.learning.RecipeApplication.converters.IngredientCommandToIngredient;
 import ro.alex.learning.RecipeApplication.converters.IngredientToIngredientCommand;
@@ -13,6 +14,8 @@ import ro.alex.learning.RecipeApplication.domain.Ingredient;
 import ro.alex.learning.RecipeApplication.domain.Recipe;
 import ro.alex.learning.RecipeApplication.repositories.RecipeRepository;
 import ro.alex.learning.RecipeApplication.repositories.UnitOfMeasureRepository;
+import ro.alex.learning.RecipeApplication.repositories.reactive.RecipeReactiveRepository;
+import ro.alex.learning.RecipeApplication.repositories.reactive.UnitOfMeasureReactiveRepository;
 
 import java.util.Optional;
 
@@ -27,13 +30,13 @@ public class IngredientServiceImplTest {
 
 
     @Mock
-    RecipeRepository recipeRepository;
+    RecipeReactiveRepository recipeRepository;
 
     @Mock
     IngredientService ingredientService;
 
     @Mock
-    UnitOfMeasureRepository unitOfMeasureRepository;
+    UnitOfMeasureReactiveRepository unitOfMeasureRepository;
 
     public IngredientServiceImplTest() {
         this.ingredientToIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
@@ -72,12 +75,10 @@ public class IngredientServiceImplTest {
         recipe.addIngredient(ingredient2);
         recipe.addIngredient(ingredient3);
 
-        Optional<Recipe> recipeOptional = Optional.of(recipe);
-
-        when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
+        when(recipeRepository.findById(anyString())).thenReturn(Mono.just(recipe));
 
         // then
-        IngredientCommand ingredientCommand = ingredientService.findByRecipeIdAndIngredientId("1", "3");
+        IngredientCommand ingredientCommand = ingredientService.findByRecipeIdAndIngredientId("1", "3").block();
 
         // when
         assertEquals("3", ingredientCommand.getId());
@@ -92,17 +93,15 @@ public class IngredientServiceImplTest {
         command.setId("3");
         command.setRecipeId("2");
 
-        Optional<Recipe> recipeOptional = Optional.of(new Recipe());
-
         Recipe savedRecipe = new Recipe();
         savedRecipe.addIngredient(new Ingredient());
         savedRecipe.getIngredients().iterator().next().setId("3");
 
-        when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
-        when(recipeRepository.save(any())).thenReturn(savedRecipe);
+        when(recipeRepository.findById(anyString())).thenReturn(Mono.just(new Recipe()));
+        when(recipeRepository.save(any())).thenReturn(Mono.just(savedRecipe));
 
         // when
-        IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command);
+        IngredientCommand savedCommand = ingredientService.saveIngredientCommand(command).block();
 
         // then
         assertEquals("3", savedCommand.getId());
@@ -119,9 +118,10 @@ public class IngredientServiceImplTest {
         ingredient.setId("3");
         recipe.addIngredient(ingredient);
 
-        Optional<Recipe> recipeOptional = Optional.of(recipe);
+        when(recipeRepository.findById(anyString())).thenReturn(Mono.just(recipe));
+        when(recipeRepository.save(any())).thenReturn(Mono.just(recipe));
 
-        when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
+
 
         // when
         ingredientService.deleteByRecipeIdAndIngredientId("1", "3");

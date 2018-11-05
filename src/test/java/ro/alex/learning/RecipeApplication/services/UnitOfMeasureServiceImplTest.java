@@ -4,12 +4,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import reactor.core.publisher.Flux;
 import ro.alex.learning.RecipeApplication.command.UnitOfMeasureCommand;
 import ro.alex.learning.RecipeApplication.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import ro.alex.learning.RecipeApplication.domain.UnitOfMeasure;
 import ro.alex.learning.RecipeApplication.repositories.UnitOfMeasureRepository;
+import ro.alex.learning.RecipeApplication.repositories.reactive.UnitOfMeasureReactiveRepository;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -20,7 +23,7 @@ public class UnitOfMeasureServiceImplTest {
     UnitOfMeasureService unitOfMeasureService;
 
     @Mock
-    UnitOfMeasureRepository unitOfMeasureRepository;
+    UnitOfMeasureReactiveRepository unitOfMeasureRepository;
 
     @Mock
     UnitOfMeasureToUnitOfMeasureCommand unitOfMeasureToUnitOfMeasureCommand;
@@ -49,10 +52,10 @@ public class UnitOfMeasureServiceImplTest {
         unitOfMeasure2.setId("2");
         unitOfMeasureSet.add(unitOfMeasure2);
 
-        when(unitOfMeasureRepository.findAll()).thenReturn(unitOfMeasureSet);
+        when(unitOfMeasureRepository.findAll()).thenReturn(Flux.just(unitOfMeasure1, unitOfMeasure2));
 
         //when
-        Set<UnitOfMeasureCommand> commands = unitOfMeasureService.listAllUoms();
+        List<UnitOfMeasureCommand> commands = unitOfMeasureService.listAllUoms().collectList().block();
 
         //then
         assertEquals(2, commands.size());

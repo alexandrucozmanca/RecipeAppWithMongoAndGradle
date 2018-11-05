@@ -1,12 +1,13 @@
 package ro.alex.learning.RecipeApplication.services;
 
+import reactor.core.publisher.Mono;
 import ro.alex.learning.RecipeApplication.command.IngredientCommand;
 
 public interface IngredientService {
 
-    IngredientCommand findByRecipeIdAndIngredientId(String recipeId, String ingredientId);
+    Mono<IngredientCommand> findByRecipeIdAndIngredientId(String recipeId, String ingredientId);
 
-    IngredientCommand saveIngredientCommand(IngredientCommand ingredientCommand);
+    Mono<IngredientCommand>saveIngredientCommand(IngredientCommand ingredientCommand);
 
-    void deleteByRecipeIdAndIngredientId(String recipeId, String ingredientID);
+    Mono<Object> deleteByRecipeIdAndIngredientId(String recipeId, String ingredientID);
 }
