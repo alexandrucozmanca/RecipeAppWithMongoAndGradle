@@ -2,14 +2,12 @@ package ro.alex.learning.RecipeApplication.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ro.alex.learning.RecipeApplication.command.RecipeCommand;
 import ro.alex.learning.RecipeApplication.converters.RecipeCommandToRecipe;
 import ro.alex.learning.RecipeApplication.converters.RecipeToRecipeCommand;
 import ro.alex.learning.RecipeApplication.domain.Recipe;
-import ro.alex.learning.RecipeApplication.exceptions.NotFoundException;
 import ro.alex.learning.RecipeApplication.repositories.reactive.RecipeReactiveRepository;
 
 @Slf4j
@@ -35,34 +33,36 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Mono<Recipe> findById(String l){
 
-       Recipe recipe = recipeRepository.findById(l).block();
-
-        if(recipe == null){
-            throw new NotFoundException("Recipe not found for ID value: " + l);
-        }
-
-        return Mono.just(recipe);
+       return  recipeRepository.findById(l);
     }
 
     @Override
-    @Transactional
-    public RecipeCommand findCommandById(String l){
-        return recipeToRecipeCommand.convert(findById(l).block());
+    public Mono<RecipeCommand> findCommandById(String id){
+
+        return recipeRepository.findById(id)
+                .map(recipe -> {
+                    RecipeCommand command = recipeToRecipeCommand.convert(recipe);
+
+                    command.getIngredients().forEach(rc ->{
+                        rc.setRecipeId(command.getId());
+                    });
+
+                    return command;
+                });
     }
 
     @Override
-    @Transactional
-    public RecipeCommand saveRecipeCommand(RecipeCommand command) {
-        Recipe detachedRecipe = recipeCommandToRecipe.convert(command);
+    public Mono<RecipeCommand> saveRecipeCommand(RecipeCommand command) {
 
-        Recipe savedRecipe = recipeRepository.save(detachedRecipe).block();
-        log.debug("Saved RecipeID = " + savedRecipe.getId());
-        return recipeToRecipeCommand.convert(savedRecipe);
+        return recipeRepository.save(recipeCommandToRecipe.convert(command))
+                .map(recipeToRecipeCommand::convert);
     }
 
     @Override
-    public void deleteById(String idToDelete)    {
-        recipeRepository.deleteById(idToDelete);
+    public Mono<Void> deleteById(String idToDelete)    {
+        recipeRepository.deleteById(idToDelete).block();
+
+        return Mono.empty();
     }
 
 }

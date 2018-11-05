@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import reactor.core.publisher.Mono;
 import ro.alex.learning.RecipeApplication.command.RecipeCommand;
 import ro.alex.learning.RecipeApplication.exceptions.NotFoundException;
 import ro.alex.learning.RecipeApplication.services.RecipeService;
@@ -28,7 +29,7 @@ public class RecipeController {
     @RequestMapping("/recipe/{id}/show")
     public String showById(@PathVariable String id, Model model) {
 
-        model.addAttribute("recipe", recipeService.findById(new String(id)));
+        model.addAttribute("recipe", recipeService.findById(new String(id)).block());
 
         return "recipe/show";
     }
@@ -62,9 +63,9 @@ public class RecipeController {
             return RECIPE_RECIPEFORM_URL;
         }
 
-        RecipeCommand savedCommand = recipeService.saveRecipeCommand(command);
+        Mono<RecipeCommand> savedCommand = recipeService.saveRecipeCommand(command);
 
-        return "redirect:/recipe/" + savedCommand.getId() +"/show/";
+        return "redirect:/recipe/" + savedCommand.block().getId() +"/show/";
     }
 
     @PostMapping
@@ -72,7 +73,7 @@ public class RecipeController {
     public String deleteRecipe(@PathVariable String id){
         log.debug("Deleting id: " + id);
 
-        recipeService.deleteById(id);
+        recipeService.deleteById(id).block();
         return "redirect:/";
     }
 

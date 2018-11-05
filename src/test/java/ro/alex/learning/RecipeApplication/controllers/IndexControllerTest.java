@@ -13,6 +13,7 @@ import ro.alex.learning.RecipeApplication.domain.Recipe;
 import ro.alex.learning.RecipeApplication.services.RecipeService;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
@@ -44,6 +45,8 @@ public class IndexControllerTest {
     public void testMockMVC() throws Exception{
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();
 
+        when(recipeService.getRecipes()).thenReturn(Flux.empty());
+
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("Index"));
@@ -52,13 +55,15 @@ public class IndexControllerTest {
     @Test
     public void getIndexPage() {
 
+        Set<Recipe> recipes = new HashSet<>();
+        recipes.add(new Recipe());
+
         Recipe recipe = new Recipe();
         recipe.setId("7");
+        recipes.add(recipe);
 
-        Flux<Recipe> recipeFlux = Flux.just(new Recipe(), recipe);
-
-        when(recipeService.getRecipes()).thenReturn(recipeFlux);
-        ArgumentCaptor<Flux<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Flux.class);
+        when(recipeService.getRecipes()).thenReturn( Flux.fromIterable(recipes));
+        ArgumentCaptor<List<Recipe>> argumentCaptor = ArgumentCaptor.forClass(List.class);
 
 
         //when
@@ -68,8 +73,9 @@ public class IndexControllerTest {
         assertEquals("Index" , viewName);
         verify(recipeService, times(1)).getRecipes();
         verify(model, times(1)).addAttribute(eq("recipes"),argumentCaptor.capture());
-        Flux<Recipe> fluxInController = argumentCaptor.getValue();
 
-        assertEquals(recipeFlux.count().block(), fluxInController.count().block());
+
+        List<Recipe> recipeList = argumentCaptor.getValue();
+        assertEquals(2, recipeList.size());
     }
 }

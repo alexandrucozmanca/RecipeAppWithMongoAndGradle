@@ -57,14 +57,6 @@ public class RecipeServiceImplTest {
         verify(recipeRepository, never()).findAll();
     }
 
-    @Test(expected = NotFoundException.class)
-    public void getRecipeByIdTestNotFound() throws Exception{
-
-        when(recipeRepository.findById(anyString())).thenReturn(Mono.empty());
-
-        Recipe recipeReturned = recipeService.findById("1").block();
-    }
-
     @Test
     public void getRecipeCommandByIdTest() throws Exception{
         Recipe recipe = new Recipe();
@@ -77,9 +69,9 @@ public class RecipeServiceImplTest {
 
         when(recipeToRecipeCommand.convert(any())).thenReturn(recipeCommand);
 
-        RecipeCommand commandById = recipeService.findCommandById("1");
+        Mono<RecipeCommand> commandById = recipeService.findCommandById("1");
 
-        assertNotNull("Null recipe returned", commandById);
+        assertNotNull("Null recipe returned", commandById.block());
         verify(recipeRepository, times(1)).findById(anyString());
         verify(recipeRepository, never()).findAll();
     }
@@ -101,6 +93,8 @@ public class RecipeServiceImplTest {
     @Test
     public void deleteByIdTest() throws Exception{
         String idToDelete = new String("2");
+
+        when(recipeRepository.deleteById(anyString())).thenReturn(Mono.empty());
 
         recipeService.deleteById(idToDelete);
 
