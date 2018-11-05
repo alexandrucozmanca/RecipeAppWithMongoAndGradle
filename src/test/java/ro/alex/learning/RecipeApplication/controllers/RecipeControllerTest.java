@@ -7,6 +7,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import reactor.core.publisher.Mono;
 import ro.alex.learning.RecipeApplication.command.RecipeCommand;
 import ro.alex.learning.RecipeApplication.domain.Recipe;
 import ro.alex.learning.RecipeApplication.exceptions.NotFoundException;
@@ -46,7 +47,7 @@ public class RecipeControllerTest {
 
 
 
-        when(recipeService.findById(anyString())).thenReturn(recipe);
+        when(recipeService.findById(anyString())).thenReturn(Mono.just(recipe));
 
         mockMvc.perform(get("/recipe/1/show"))
                 .andExpect(status().isOk())

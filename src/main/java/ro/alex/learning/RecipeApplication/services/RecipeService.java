@@ -1,14 +1,14 @@
 package ro.alex.learning.RecipeApplication.services;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import ro.alex.learning.RecipeApplication.command.RecipeCommand;
 import ro.alex.learning.RecipeApplication.domain.Recipe;
 
-import java.util.Set;
-
 public interface RecipeService {
-    Set<Recipe> getRecipes();
+    Flux<Recipe> getRecipes();
 
-    Recipe findById(String l);
+    Mono<Recipe> findById(String l);
 
     RecipeCommand saveRecipeCommand(RecipeCommand command);
 
