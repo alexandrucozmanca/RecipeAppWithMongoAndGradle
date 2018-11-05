@@ -61,9 +61,12 @@ public class ImageControllerTest {
 
     @Test
     public void handleImagePost() throws Exception{
+
         MockMultipartFile mockMultipartFile =
                 new MockMultipartFile("imagefile", "testing.text", "text/plain",
                         "Something".getBytes());
+
+        when(imageService.saveImageFile(anyString(), any())).thenReturn(Mono.empty());
 
         mockMvc.perform(multipart("/recipe/1/image").file(mockMultipartFile))
                 .andExpect(status().is3xxRedirection())
@@ -100,12 +103,4 @@ public class ImageControllerTest {
 
         assertEquals(s.getBytes().length, responseByte.length);
     }
-
-    // no longer needed
-//    @Test
-//    public void testGetImageNumberFormatException() throws Exception{
-//        mockMvc.perform(get("/recipe/wrong/recipeimage"))
-//                .andExpect(status().isBadRequest())
-//                .andExpect(view().name("400error"));
-//    }
 }
