@@ -121,8 +121,6 @@ public class IngredientServiceImplTest {
         when(recipeRepository.findById(anyString())).thenReturn(Mono.just(recipe));
         when(recipeRepository.save(any())).thenReturn(Mono.just(recipe));
 
-
-
         // when
         ingredientService.deleteByRecipeIdAndIngredientId("1", "3");
 

@@ -47,29 +47,6 @@ public class IngredientServiceImpl implements IngredientService {
                     command.setRecipeId(recipeId);
                     return command;
                 });
-
-
-
-//        Recipe recipe = recipeRepository.findById(recipeId).block();
-//
-//        if(recipe == null){
-//
-//            log.error("Recipe ID not found, ID: " + recipeId);
-//        }
-//
-//
-//        IngredientCommand ingredientCommand = recipe.getIngredients().stream()
-//                .filter(ingredient -> ingredient.getId().equalsIgnoreCase(ingredientId))
-//                .map(ingredient -> ingredientToIngredientCommand.convert(ingredient)).findFirst().get();
-//
-//        if(ingredientCommand == null){
-//
-//            log.error("Ingredient id not found: " + ingredientId);
-//        }
-//
-//        ingredientCommand.setRecipeId(recipeId);
-//
-//        return Mono.just(ingredientCommand);
     }
 
     @Override
@@ -95,10 +72,13 @@ public class IngredientServiceImpl implements IngredientService {
 
                 ingredientFound.setUom(unitOfMeasureRepository
                         .findById(ingredientCommand.getUom().getId()).block());
+
+                if(ingredientFound.getUom() == null){
+                    new RuntimeException("UOM Not Found");
+                }
             } else {
 
                 Ingredient ingredient = ingredientCommandToIngredient.convert(ingredientCommand);
-
                 recipe.addIngredient(ingredient);
             }
 

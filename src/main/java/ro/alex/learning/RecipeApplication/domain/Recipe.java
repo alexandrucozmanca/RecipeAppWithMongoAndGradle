@@ -25,13 +25,8 @@ public class Recipe implements Comparable<Recipe>{
     private String url;
     private String directions;
     private Difficulty difficulty;
-
-    @DBRef
     private Set<Category> categories = new HashSet<>();
-
-
-    private Set<Ingredient> ingredients = new HashSet<>();
-
+    private  Set<Ingredient> ingredients = new HashSet<>();
     private Byte[] image;
     private Notes notes;
 
