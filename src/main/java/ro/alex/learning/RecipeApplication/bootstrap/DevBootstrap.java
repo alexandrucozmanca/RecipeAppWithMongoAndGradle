@@ -1,7 +1,6 @@
 package ro.alex.learning.RecipeApplication.bootstrap;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -11,9 +10,6 @@ import ro.alex.learning.RecipeApplication.domain.*;
 import ro.alex.learning.RecipeApplication.repositories.CategoryRepository;
 import ro.alex.learning.RecipeApplication.repositories.RecipeRepository;
 import ro.alex.learning.RecipeApplication.repositories.UnitOfMeasureRepository;
-import ro.alex.learning.RecipeApplication.repositories.reactive.CategoryReactiveRepository;
-import ro.alex.learning.RecipeApplication.repositories.reactive.RecipeReactiveRepository;
-import ro.alex.learning.RecipeApplication.repositories.reactive.UnitOfMeasureReactiveRepository;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

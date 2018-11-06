@@ -1,10 +1,20 @@
 package ro.alex.learning.RecipeApplication.controllers;
 
+import jdk.nashorn.internal.ir.annotations.Immutable;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
@@ -23,33 +33,46 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+@Ignore
+@RunWith(SpringRunner.class)
+@WebFluxTest
+@Import(IndexController.class)
 public class IndexControllerTest {
 
+    WebTestClient webTestClient;
 
-    IndexController indexController;
+    @Autowired
+    ApplicationContext applicationContext;
 
-    @Mock
+    @MockBean
     RecipeService recipeService;
+
     @Mock
     Model model;
 
+    @Autowired
+    IndexController indexController;
+
     @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
+    public void setUp() throws Exception{
 
-        indexController = new IndexController(recipeService);
+        webTestClient = WebTestClient.bindToController(indexController).build();
     }
-
 
     @Test
     public void testMockMVC() throws Exception{
-        MockMvc mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();
+        //MockMvc mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();
 
         when(recipeService.getRecipes()).thenReturn(Flux.empty());
 
-        mockMvc.perform(get("/"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("Index"));
+//        mockMvc.perform(get("/"))
+//                .andExpect(status().isOk())
+//                .andExpect(view().name("Index"));
+
+        webTestClient.get().uri("/")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody();
     }
 
     @Test

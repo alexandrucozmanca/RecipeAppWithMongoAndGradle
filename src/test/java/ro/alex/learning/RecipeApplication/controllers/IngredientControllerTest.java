@@ -1,6 +1,7 @@
 package ro.alex.learning.RecipeApplication.controllers;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -16,14 +17,13 @@ import ro.alex.learning.RecipeApplication.services.IngredientService;
 import ro.alex.learning.RecipeApplication.services.RecipeService;
 import ro.alex.learning.RecipeApplication.services.UnitOfMeasureService;
 
-import java.util.HashSet;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@Ignore
 public class IngredientControllerTest {
 
     @Mock

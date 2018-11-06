@@ -12,12 +12,8 @@ import ro.alex.learning.RecipeApplication.converters.UnitOfMeasureCommandToUnitO
 import ro.alex.learning.RecipeApplication.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import ro.alex.learning.RecipeApplication.domain.Ingredient;
 import ro.alex.learning.RecipeApplication.domain.Recipe;
-import ro.alex.learning.RecipeApplication.repositories.RecipeRepository;
-import ro.alex.learning.RecipeApplication.repositories.UnitOfMeasureRepository;
 import ro.alex.learning.RecipeApplication.repositories.reactive.RecipeReactiveRepository;
 import ro.alex.learning.RecipeApplication.repositories.reactive.UnitOfMeasureReactiveRepository;
-
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
